@@ -16,7 +16,7 @@
 # print(dentro1())
 # print(dentro2())
 
-def concatenar(string_inicial):
+def concatenar(string_inicial = ''):
     valor_final = string_inicial
 
     def interna(valor_a_concatenar):
