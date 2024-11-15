@@ -1,5 +1,6 @@
 """
 Closure e funções que retornam outras funções
+<<<<<<< HEAD
 """
 
 
@@ -21,3 +22,6 @@ for nome in ['Hélio Cóptero', 'Mara Vilha', 'Giuseppe Camole']:
     print(falar_bom_dia(nome))
     print(falar_boa_noite(nome))
     print()
+=======
+"""
+>>>>>>> 8a7acf04e4792711d966f1e6371a33886c2e81fc

@@ -12,6 +12,7 @@
 # partes - from nome_modulo import objeto1, objeto2
 # Vantagens: nomes pequenos
 # Desvantagens: Sem o namespace do módulo
+<<<<<<< HEAD
 # from sys import exit, platform
 
 # print(platform)
@@ -40,3 +41,5 @@ print(pf)
 
 # print(platform)
 # exit()
+=======
+>>>>>>> 8a7acf04e4792711d966f1e6371a33886c2e81fc
