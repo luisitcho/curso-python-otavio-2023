@@ -9,7 +9,7 @@
 # print(string.upper())
 # print(isinstance(string, str))
 
-class Pessoa():
+class Pessoa:
     def __init__(self, nome, sobrenome):
         self.nome = nome
         self.sobrenome = sobrenome
