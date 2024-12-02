@@ -34,11 +34,22 @@ class MyOpen:
         print('fechando arquivo')
         self._arquivo.close()
 
+        # raise class_exception('Minha mensagem!', *exception_.args).with_traceback(traceback_)
+
+        # print(class_exception)
+        # print(exception_)
+        # print(traceback_)
+
+        # exception_.add_note('Minha nota!')
+        # raise ConnectionError('Falha na conexão!')
+
+        # return True
+
 
 with MyOpen('aula160.txt', 'w') as arquivo:
     arquivo.write('Linha 1 \n')
     arquivo.write('Linha 2 \n')
-    arquivo.write('Linha 3 \n')
+    arquivo.write('Linha 3 \n', 1234)
     arquivo.write('Linha 4 \n')
     arquivo.write('Linha 5 \n')
     print('WITH', arquivo)
