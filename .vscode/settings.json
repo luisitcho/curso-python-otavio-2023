@@ -5,6 +5,7 @@
     // "workbench.iconTheme": "material-icon-theme",
     // "editor.fontSize": 18,
     // "workbench.colorTheme": "OM Theme (Default Dracula Italic)",
+    "editor.rulers": [80, 120],
     "code-runner.executorMap": {
         "python": "clear && python3 -u",
     },
