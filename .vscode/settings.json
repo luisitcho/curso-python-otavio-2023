@@ -1,18 +1,39 @@
 {
-    // "window.zoomLevel": 2,
-    // "workbench.startupEditor": "none",
-    // "explorer.compactFolders": false,
-    // "workbench.iconTheme": "material-icon-theme",
-    // "editor.fontSize": 18,
-    // "workbench.colorTheme": "OM Theme (Default Dracula Italic)",
-    "editor.rulers": [80, 120],
+    "editor.rulers": [
+        80,
+        120
+    ],
     "code-runner.executorMap": {
         "python": "clear && python3 -u",
     },
     "code-runner.runInTerminal": true,
     "code-runner.ignoreSelection": true,
     "[python]": {
-        "editor.defaultFormatter": "ms-python.autopep8"
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true,
+            "source.fixAll.unusedImports": true,
+            "source.organizeImports": true
+        }
     },
-    "python.formatting.provider": "none"
+    "python.languageServer": "Pylance",
+    "python.formatting.autopep8Args": [
+        "--indent-size=4",
+        "--max-line-length=80"
+        // "--ignore=E111"
+    ],
+    "python.linting.flake8Args": [
+        // "--ignore=E111",
+    ],
+    "python.linting.flake8Enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.analysis.diagnosticSeverityOverrides": {},
+    // "python.defaultInterpreterPath": "./venv/bin/python",
+    "python.analysis.typeCheckingMode": "basic",
+    "cSpell.enabled": false
 }
