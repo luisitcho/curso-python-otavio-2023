@@ -45,5 +45,12 @@ Crie um ambiente de desenvolvimento local simples e rápido.
 &nbsp;
 
 **Requisitos**
+
 Python instalado no ambiente virtual (``venv``).
 O diretório ``aula202_site/``contém os arquivos a serem servidos.
+
+&nbsp;
+
+**Comando inteiro**
+
+``venv/bin/python -m http.server -d aula202_site/ 3333``
