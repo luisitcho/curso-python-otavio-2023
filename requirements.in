@@ -9,6 +9,7 @@ typing-extensions
 flake8
 pylint
 mypy
+PySide6
 
 
 # asgiref==3.8.1
