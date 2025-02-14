@@ -42,6 +42,6 @@ Antes de iniciar, certifique-se de ter o **Python 3.8+** instalado em seu sistem
 
 
 ## 📜 Licença
-Este projeto está licenciado sob a [MIT License](LICENSE).
+Este projeto está licenciado sob a [MIT License](https://github.com/luisitcho/curso-python-otavio-2023/blob/main/aula213/LICENSE).
 
 ---
