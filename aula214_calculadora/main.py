@@ -1,17 +1,21 @@
 import sys
 
 from main_window import MainWindow
-from PySide6.QtWidgets import QApplication, QLabel
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QApplication
+from variables import WINDOW_ICON
 
 if __name__ == "__main__":
+    # Cria a aplicação
     app = QApplication(sys.argv)
     window = MainWindow()
 
-    first_label = QLabel("Primeira Label")
-    first_label.setStyleSheet("font-size: 100px;")
+    # Define o ícone
+    icon = QIcon(str(WINDOW_ICON))
+    window.setWindowIcon(icon)
+    app.setWindowIcon(icon)
 
-    window.v_layout.addWidget(first_label)
+    # Executa tudo
     window.adjusteFixedSize()
-
     window.show()
     app.exec()
