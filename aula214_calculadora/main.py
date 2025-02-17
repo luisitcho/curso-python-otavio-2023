@@ -1,5 +1,6 @@
 import sys
 
+from display import Display
 from main_window import MainWindow
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
@@ -14,6 +15,11 @@ if __name__ == "__main__":
     icon = QIcon(str(WINDOW_ICON))
     window.setWindowIcon(icon)
     app.setWindowIcon(icon)
+
+    # Display
+    display = Display()
+    display.setPlaceholderText('Digite algo')
+    window.addToVLayout(display)
 
     # Executa tudo
     window.adjusteFixedSize()
