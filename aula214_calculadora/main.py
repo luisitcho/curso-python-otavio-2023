@@ -1,5 +1,6 @@
 import sys
 
+from buttons import Button
 from display import Display
 from info import Info
 from main_window import MainWindow
@@ -27,6 +28,10 @@ if __name__ == "__main__":
     display = Display()
     display.setPlaceholderText('Digite algo')
     window.addToVLayout(display)
+
+    # Button
+    button = Button('Texto do botão')
+    window.addToVLayout(button)
 
     # Executa tudo
     window.adjusteFixedSize()
