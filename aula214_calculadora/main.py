@@ -1,6 +1,6 @@
 import sys
 
-from buttons import Button
+from buttons import Button, ButtonsGrid
 from display import Display
 from info import Info
 from main_window import MainWindow
@@ -22,16 +22,23 @@ if __name__ == "__main__":
 
     # Info
     info = Info('2.0 ^ 10.0 = 1024')
-    window.addToVLayout(info)
+    window.addWidgetToVLayout(info)
 
     # Display
     display = Display()
     display.setPlaceholderText('Digite algo')
-    window.addToVLayout(display)
+    window.addWidgetToVLayout(display)
+
+    # Grid
+    buttonsGrid = ButtonsGrid()
+    window.vLayout.addLayout(buttonsGrid)
 
     # Button
-    button = Button('Texto do botão')
-    window.addToVLayout(button)
+    # buttonsGrid.addWidget(Button('1'), 0, 0)
+    # buttonsGrid.addWidget(Button('2'), 0, 1)
+    # buttonsGrid.addWidget(Button('3'), 0, 2)
+
+    # buttonsGrid.addWidget(Button('4'), 1, 1, 1, 1)
 
     # Executa tudo
     window.adjusteFixedSize()
