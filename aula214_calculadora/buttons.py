@@ -40,6 +40,12 @@ class ButtonsGrid(QGridLayout):
         self.display = display
         self.info = info
         self._equation = ''
+        self._equationInitialValue = 'Sua conta'
+        self._left = None
+        self._right = None
+        self._operator = None
+
+        self.equation = self._equationInitialValue
         self._makeGrid()
 
     @property
@@ -73,6 +79,11 @@ class ButtonsGrid(QGridLayout):
         if text == 'C':
             self._connectButtonClicked(button, self._clear)
 
+        if text in '+-/*':
+            self._connectButtonClicked(
+                button, self._makeSlot(self._operatorClicked, button)
+            )
+
     def _makeSlot(self, func, *args, **kwargs):
         @Slot(bool)
         def realSlot(_):
@@ -89,5 +100,27 @@ class ButtonsGrid(QGridLayout):
         self.display.insert(textButton)
 
     def _clear(self):
-        print('mensagem')
+        self._left = None
+        self._right = None
+        self._operator = None
+        self.equation = self._equationInitialValue
         self.display.clear()
+
+    def _operatorClicked(self, button):
+        textButton = button.text()  # +-/* (etc...)
+        displayText = self.display.text()  # Deverá ser meu número _left
+        self.display.clear()  # Limpa o display
+
+        # Se a pessoa clicou no operador sem
+        # configurar qualquer número
+        if not isValidNumber(displayText) and self._left is None:
+            print('Não tem nada para colocar no valor da esquerda')
+            return
+
+        # Se houver algo no número da esquerda,
+        # não fazemos nada. Aguardaremos o número da direita.
+        if self._left is None:
+            self._left = float(displayText)
+
+        self._operator = textButton
+        self.equation = f'{self._left} {self._operator} ??'
