@@ -1,6 +1,6 @@
 import sys
 
-from buttons import Button, ButtonsGrid
+from buttons import ButtonsGrid
 from display import Display
 from info import Info
 from main_window import MainWindow
@@ -30,15 +30,8 @@ if __name__ == "__main__":
     window.addWidgetToVLayout(display)
 
     # Grid
-    buttonsGrid = ButtonsGrid()
+    buttonsGrid = ButtonsGrid(display)
     window.vLayout.addLayout(buttonsGrid)
-
-    # Button
-    # buttonsGrid.addWidget(Button('1'), 0, 0)
-    # buttonsGrid.addWidget(Button('2'), 0, 1)
-    # buttonsGrid.addWidget(Button('3'), 0, 2)
-
-    # buttonsGrid.addWidget(Button('4'), 1, 1, 1, 1)
 
     # Executa tudo
     window.adjusteFixedSize()
