@@ -34,7 +34,7 @@ class ButtonsGrid(QGridLayout):
             ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
-            ['',  '0', '.', '='],
+            ['', '0', '.', '='],
         ]
 
         self.display = display
@@ -83,6 +83,8 @@ class ButtonsGrid(QGridLayout):
             self._connectButtonClicked(
                 button, self._makeSlot(self._operatorClicked, button)
             )
+        if text == '=':
+            self._connectButtonClicked(button, self._calculate)
 
     def _makeSlot(self, func, *args, **kwargs):
         @Slot(bool)
@@ -111,8 +113,7 @@ class ButtonsGrid(QGridLayout):
         displayText = self.display.text()  # Deverá ser meu número _left
         self.display.clear()  # Limpa o display
 
-        # Se a pessoa clicou no operador sem
-        # configurar qualquer número
+        # Se a pessoa clicou no operador sem configurar qualquer número
         if not isValidNumber(displayText) and self._left is None:
             print('Não tem nada para colocar no valor da esquerda')
             return
@@ -124,3 +125,28 @@ class ButtonsGrid(QGridLayout):
 
         self._operator = textButton
         self.equation = f'{self._left} {self._operator} ??'
+
+    def _calculate(self):
+        displayText = self.display.text()
+
+        if not isValidNumber(displayText):
+            print('Não tem nada para colocar no valor da direita')
+            return
+
+        self._right = float(displayText)
+        self.equation = f'{self._left} {self._operator} {self._right}'
+        result = 0.0
+
+        if self._operator is None or self._left is None:
+            return
+
+        try:
+            result = eval(self.equation)
+        except ZeroDivisionError:
+            print('Não é possível dividir por zero')
+            return
+
+        self.display.clear()
+        self.info.setText(f'{self.equation} = {result}')
+        self._left = result
+        self._right = None
