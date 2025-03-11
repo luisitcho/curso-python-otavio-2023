@@ -1,3 +1,4 @@
+import math
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Slot
@@ -79,7 +80,7 @@ class ButtonsGrid(QGridLayout):
         if text == 'C':
             self._connectButtonClicked(button, self._clear)
 
-        if text in '+-/*':
+        if text in '+-/*^':
             self._connectButtonClicked(
                 button, self._makeSlot(self._operatorClicked, button)
             )
@@ -135,18 +136,27 @@ class ButtonsGrid(QGridLayout):
 
         self._right = float(displayText)
         self.equation = f'{self._left} {self._operator} {self._right}'
-        result = 0.0
+        result = 'erro'
 
         if self._operator is None or self._left is None:
             return
 
         try:
-            result = eval(self.equation)
+            if '^' in self._operator and isinstance(self._left, float):
+                result = math.pow(float(self._left), float(self._right))
+            else:
+                result = eval(self.equation)
         except ZeroDivisionError:
             print('Não é possível dividir por zero')
-            return
+            # return
+        except OverflowError:
+            print('Número muito extenso para ser calculado')
+            # return
 
         self.display.clear()
         self.info.setText(f'{self.equation} = {result}')
         self._left = result
         self._right = None
+
+        if result == 'erro':
+            self._left = None
