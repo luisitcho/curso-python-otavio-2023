@@ -10,6 +10,7 @@ class Display(QLineEdit):
     delPressed = Signal()
     clearPressed = Signal()
     inputPressed = Signal(str)
+    operatorPressed = Signal(str)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -30,32 +31,36 @@ class Display(QLineEdit):
         isEnter = key in [KEYS.Key_Enter, KEYS.Key_Return, KEYS.Key_Equal]
         isDelete = key in [KEYS.Key_Backspace, KEYS.Key_Delete, KEYS.Key_D]
         isEsc = key in [KEYS.Key_Escape, KEYS.Key_C]
+        isOperator = key in [
+            KEYS.Key_Plus, KEYS.Key_Minus, KEYS.Key_Asterisk, KEYS.Key_Slash,
+            KEYS.Key_P, KEYS.Key_AsciiCircum
+        ]
 
         if isEnter:
-            print(f'EQ {text} pressionado, sinal emitido', type(self).__name__)
             self.eqPressed.emit()
             return event.ignore()
         # return super().keyPressEvent(event)
 
         if isDelete:
-            print('isDelete pressionado, sinal emitido', type(self).__name__)
-            print(f'isDelete  {text}  pressionado, sinal emitido',
-                  type(self).__name__)
             self.delPressed.emit()
             return event.ignore()
         # return super().keyPressEvent(event)
 
         if isEsc:
-            print('isEsc pressionado, sinal emitido', type(self).__name__)
             self.clearPressed.emit()
             return event.ignore()
         # return super().keyPressEvent(event)
+
+        if isOperator:
+            if text.lower() == 'p':
+                text = '^'
+            self.operatorPressed.emit(text)
+            return event.ignore()
 
         # Verifica se a tecla não tem texto
         if isEmpty(text):
             return event.ignore()
 
         if isNumOrDot(text):
-            print('inputPressed pressionado, sinal emitido', type(self).__name__)
             self.inputPressed.emit(text)
             return event.ignore()

@@ -61,10 +61,15 @@ class ButtonsGrid(QGridLayout):
         self._equation = equation
         self.info.setText(equation)
 
+    def vouApagar(self, *args):
+        print('Signal recebido por "Vou Apagar" em', type(self).__name__, args)
+
     def _makeGrid(self):
-        self.display.eqPressed.connect(print('peppa'))
+        self.display.eqPressed.connect(self.vouApagar)
         self.display.delPressed.connect(self.display.backspace)
-        self.display.clearPressed.connect(print('Clear'))
+        self.display.clearPressed.connect(self.vouApagar)
+        self.display.inputPressed.connect(self.vouApagar)
+        self.display.operatorPressed.connect(self.vouApagar)
 
         for rowNumber, rowData in enumerate(self._gridMask):
             for columnNumber, textButton in enumerate(rowData):
