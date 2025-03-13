@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QGridLayout, QPushButton
-from utils import isEmpty, isNumOrDot, isValidNumber
+from utils import convertToNumber, isEmpty, isNumOrDot, isValidNumber
 from variables import MEDIUM_FONT_SIZE
 
 if TYPE_CHECKING:
@@ -37,7 +37,7 @@ class ButtonsGrid(QGridLayout):
             ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
-            ['', '0', '.', '='],
+            ['N', '0', '.', '='],
         ]
 
         self.display = display
@@ -92,6 +92,9 @@ class ButtonsGrid(QGridLayout):
         if text == 'Del':
             self._connectButtonClicked(button, self.display.backspace)
 
+        if text == 'N':
+            self._connectButtonClicked(button, self._invertNumber)
+
         if text in '+-/*^':
             self._connectButtonClicked(
                 button, self._makeSlot(self._configLeftOperator, text)
@@ -105,6 +108,16 @@ class ButtonsGrid(QGridLayout):
         def realSlot(_):
             func(*args, **kwargs)
         return realSlot
+
+    @Slot()
+    def _invertNumber(self):
+        displayText = self.display.text()
+
+        if not isValidNumber(displayText):
+            return
+
+        number = convertToNumber(displayText) * -1
+        self.display.setText(str(number))
 
     @Slot()  # type: ignore
     def _insertToDisplay(self, text):
@@ -136,7 +149,7 @@ class ButtonsGrid(QGridLayout):
         # Se houver algo no número da esquerda,
         # não fazemos nada. Aguardaremos o número da direita.
         if self._left is None:
-            self._left = float(displayText)
+            self._left = convertToNumber(displayText)
 
         self._operator = text
         self.equation = f'{self._left} {self._operator} ??'
@@ -149,7 +162,7 @@ class ButtonsGrid(QGridLayout):
             self._showError('Não tem nada para colocar no valor da direita')
             return
 
-        self._right = float(displayText)
+        self._right = convertToNumber(displayText)
         self.equation = f'{self._left} {self._operator} {self._right}'
         result = 'erro'
 
@@ -158,7 +171,7 @@ class ButtonsGrid(QGridLayout):
 
         try:
             if '^' in self._operator and isinstance(self._left, float):
-                result = math.pow(float(self._left), float(self._right))
+                result = math.pow(self._left, self._right)
             else:
                 result = eval(self.equation)
         except ZeroDivisionError:
