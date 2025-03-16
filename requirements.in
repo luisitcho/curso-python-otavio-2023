@@ -10,6 +10,7 @@ flake8
 pylint
 mypy
 PySide6
+pyinstaller
 
 
 # asgiref==3.8.1
