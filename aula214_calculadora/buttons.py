@@ -63,7 +63,7 @@ class ButtonsGrid(QGridLayout):
 
     def _makeGrid(self):
         self.display.eqPressed.connect(self._calculate)
-        self.display.delPressed.connect(self.display.backspace)
+        self.display.delPressed.connect(self._backspace)
         self.display.clearPressed.connect(self._clear)
         self.display.inputPressed.connect(self._insertToDisplay)
         self.display.operatorPressed.connect(self._configLeftOperator)
@@ -127,6 +127,7 @@ class ButtonsGrid(QGridLayout):
             return
 
         self.display.insert(text)
+        self.display.setFocus()
 
     @Slot()
     def _clear(self):
@@ -135,11 +136,13 @@ class ButtonsGrid(QGridLayout):
         self._operator = None
         self.equation = self._equationInitialValue
         self.display.clear()
+        self.display.setFocus()
 
     @Slot()  # type: ignore
     def _configLeftOperator(self, text):
         displayText = self.display.text()  # Deverá ser meu número _left
         self.display.clear()  # Limpa o display
+        self.display.setFocus()
 
         # Se a pessoa clicou no operador sem configurar qualquer número
         if not isValidNumber(displayText) and self._left is None:
@@ -158,7 +161,7 @@ class ButtonsGrid(QGridLayout):
     def _calculate(self):
         displayText = self.display.text()
 
-        if not isValidNumber(displayText):
+        if not isValidNumber(displayText) or self._left is None:
             self._showError('Não tem nada para colocar no valor da direita')
             return
 
@@ -170,8 +173,9 @@ class ButtonsGrid(QGridLayout):
             return
 
         try:
-            if '^' in self._operator and isinstance(self._left, float):
+            if '^' in self._operator and isinstance(self._left, (int, float)):
                 result = math.pow(self._left, self._right)
+                result = convertToNumber(str(result))
             else:
                 result = eval(self.equation)
         except ZeroDivisionError:
@@ -185,15 +189,22 @@ class ButtonsGrid(QGridLayout):
         self.info.setText(f'{self.equation} = {result}')
         self._left = result
         self._right = None
+        self.display.setFocus()
 
         if result == 'erro':
             self._left = None
+
+    @Slot()
+    def _backspace(self):
+        self.display.backspace()
+        self.display.setFocus()
 
     def _showError(self, text):
         msg = self.window.makeMessageBox()
         msg.setWindowTitle("Erro!")
         msg.setText(text)
         msg.setIcon(msg.Icon.Critical)
+        self.display.setFocus()
 
         msg.setStandardButtons(
             msg.StandardButton.Ok | msg.StandardButton.Cancel
