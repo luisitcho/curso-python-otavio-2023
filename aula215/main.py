@@ -31,15 +31,15 @@ cursor.execute(
 connection.commit()
 
 # Insere dados na tabela
-cursor.execute(
-    (
-        f'INSERT INTO {TABLE_NAME} (id, name, weight) '
-        'VALUES '
-        '(NULL, "Luisitcho", 74),'
-        '(NULL, "Peppa", 1200),'
-        '(NULL, "Toddy", 10)'
-    )
+sql = (
+    f'INSERT INTO {TABLE_NAME} '
+    '(name, weight) VALUES '
+    '(?, ?),'
+    '(?, ?),'
+    '(?, ?)'
 )
+print(sql)
+cursor.execute(sql, ("Luisitchou", 74, "Peppa", 1200, "Toddy", 10))
 connection.commit()
 
 cursor.close()
