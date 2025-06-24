@@ -10,14 +10,36 @@ TABLE_NAME = 'customers'
 connection = sqlite3.connect(DB_PATH)
 cursor = connection.cursor()
 
+# Fazendo DELETE sem WHERE
+cursor.execute(  # Apagando os registros da tabela
+    f'DELETE FROM {TABLE_NAME}'
+)
+cursor.execute(  # Reseta o contador de IDs
+    f'DELETE FROM sqlite_sequence WHERE name="{TABLE_NAME}"'
+)
+connection.commit()
+
+
+# Cria a tabela se não existir
 cursor.execute(
     f'''CREATE TABLE IF NOT EXISTS {TABLE_NAME}(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
-        weigth TEXT
+        weight TEXT
     )'''
 )
+connection.commit()
 
+# Insere dados na tabela
+cursor.execute(
+    (
+        f'INSERT INTO {TABLE_NAME} (id, name, weight) '
+        'VALUES '
+        '(NULL, "Luisitcho", 74),'
+        '(NULL, "Peppa", 1200),'
+        '(NULL, "Toddy", 10)'
+    )
+)
 connection.commit()
 
 cursor.close()
