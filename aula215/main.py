@@ -1,4 +1,3 @@
-
 import sqlite3
 from pathlib import Path
 
@@ -19,7 +18,6 @@ cursor.execute(  # Reseta o contador de IDs
 )
 connection.commit()
 
-
 # Cria a tabela se não existir
 cursor.execute(
     f'''CREATE TABLE IF NOT EXISTS {TABLE_NAME}(
@@ -30,16 +28,14 @@ cursor.execute(
 )
 connection.commit()
 
-# Insere dados na tabela
-sql = (
-    f'INSERT INTO {TABLE_NAME} '
-    '(name, weight) VALUES '
-    '(?, ?),'
-    '(?, ?),'
-    '(?, ?)'
-)
-print(sql)
-cursor.execute(sql, ("Luisitchou", 74, "Peppa", 1200, "Toddy", 10))
+# ✅ AJUSTE: use apenas um par de placeholders (?, ?) no SQL
+sql = f'INSERT INTO {TABLE_NAME} (name, weight) VALUES (?, ?)'
+
+# ✅ AJUSTE: forneça uma lista de tuplas para o executemany
+data = [("Luisitchou", 74), ("Peppa", 1200), ("Toddy", 10)]
+
+# ✅ AJUSTE: agora está correto com executemany
+cursor.executemany(sql, data)
 connection.commit()
 
 cursor.close()
