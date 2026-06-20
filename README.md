@@ -5,8 +5,41 @@ Repositório apresentado ao curso de **Python 3 completo: PySide6, Django, Selen
 
 ## Extensões deste repositório
 
-> ⚠️ Nota: Estes repositórios são complementares a este projeto principal.
+> Nota: Estes repositórios são complementares a este projeto principal.
 * [Curso de Django](https://github.com/luisitcho/curso-django-otavio-2025) - Repositório dedicado a parte de Django.
+
+---
+
+## Comandos Úteis
+
+### Ambiente Virtual (Virtual Environment)
+O ambiente virtual (venv) isola as dependências do projeto para não interferir nas bibliotecas globais do Python instaladas no seu computador.
+
+**1. Criar o ambiente virtual** (execute apenas uma vez):
+```bash
+python -m venv .venv
+```
+
+**2. Ativar o ambiente virtual**:
+* No **Linux/macOS**:
+  ```bash
+  source .venv/bin/activate
+  ```
+* No **Windows**:
+  ```powershell
+  .venv\Scripts\activate
+  ```
+
+**3. Desativar o ambiente virtual**:
+```bash
+deactivate
+```
+
+### Instalar Dependências
+Com o ambiente virtual **ativado**, instale as dependências do projeto (caso utilize um arquivo de requirements):
+```bash
+pip install -r requirements.txt
+```
 
 ---
 ---
